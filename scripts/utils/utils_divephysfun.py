@@ -3,6 +3,7 @@ depth: z
 volume: V
 pressure: p
 """
+import numpy as np
 
 # By default this assumes we use a seawater regime
 DEFAULT_REGIME = 'seawater'
@@ -43,7 +44,7 @@ def get_p_from_z(depth: float) -> float:
     Raises:
         ValueError: If depth is not a positive number.
     """
-    if depth < 0:
+    if np.any(depth) < 0:
         raise ValueError("Depth should be a positive number.")
     
     return depth/CONVERSION_FACTOR + 1
@@ -61,7 +62,7 @@ def get_z_from_p(pressure: float) -> float:
     Raises:
         ValueError: If pressure is not greater than 1 bar.
     """
-    if pressure < 1:
+    if np.any(pressure) < 1:
         raise ValueError("Pressure should be greater than 1 bar.")
     
     return (pressure - 1) * CONVERSION_FACTOR
